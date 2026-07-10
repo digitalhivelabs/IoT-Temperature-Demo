@@ -1,0 +1,3 @@
+{
+  "IOT_DEVICE_CONNECTION_STRING": "HostName=your-iothub.azure-devices.net;DeviceId=shipment-001;SharedAccessKey=your-device-key"
+}
