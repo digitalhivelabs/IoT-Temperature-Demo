@@ -1,0 +1,22 @@
+info:
+  name: Command Device
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:5001/api/device/temperature-pharma-001/command
+  body:
+    type: json
+    data: |-
+      {
+        "command": "silence_buzzer",
+        "correlationId": "shipment-tracker-001"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

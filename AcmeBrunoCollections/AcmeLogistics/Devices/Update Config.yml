@@ -1,0 +1,21 @@
+info:
+  name: Update Config
+  type: http
+  seq: 2
+
+http:
+  method: PUT
+  url: http://localhost:5001/api/device/temperature-pharma-001/config
+  body:
+    type: json
+    data: |-
+      {
+        "temperatureThresholdC": 6.0
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
