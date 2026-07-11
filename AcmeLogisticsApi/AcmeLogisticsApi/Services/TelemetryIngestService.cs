@@ -47,12 +47,13 @@ namespace AcmeLogisticsApi.Services
 
                 if (consecutiveHighReadings >= 3)
                 {
-                    var alert = new
+                    var alert = new AlertMessage
                     {
-                        deviceId = telemetry?.DeviceId,
-                        temperature = telemetry?.TemperatureC,
-                        timestamp = telemetry?.Timestamp,
-                        message = "Alert sustained: temperature exceeds"
+                        DeviceId = telemetry?.DeviceId,
+                        TemperatureC = telemetry.TemperatureC,
+                        Timestamp = telemetry.Timestamp,
+                        Message = "Alert sustained: temperature exceeds",
+                        Acknowledged = false
                     };
 
                     // Guardar alerta en Blob Storage o DB
