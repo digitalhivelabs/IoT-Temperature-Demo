@@ -20,8 +20,8 @@ This repository contains my solution for the Acme Logistics IoT Take-Home Exerci
 | Requested Deliverable | Description Included | Status |
 | :--- | :--- | :---: |
 | **`DESIGN.md`** | Architecture diagram, component choices, trade-offs, failure modes, and security considerations. | **[✓] Completed** |
-| **Working Server** | Cloud/server-side code ready to run with clear execution setup instructions (`README` / `SERVER.md`). | **[✓] Completed** |
-| **Demo Notes / Video** | Step-by-step evidence of the E2E flow: Uplink ➔ Sustained Alert ➔ Operator Acknowledge ➔ Downlink Silence. | **[✓] Completed** |
+| **Working Server** | Cloud/server-side code ready to run with clear execution setup instructions (Below`). | **[✓] Completed** |
+| **Demo Notes / Video** | Step-by-step evidence of the E2E flow | **[✓] Completed** |
 | **Public Git Repo** | Organized repository with clean commit history and configuration via `.example` files (no secrets). | **[✓] Completed** |
 
 ---
