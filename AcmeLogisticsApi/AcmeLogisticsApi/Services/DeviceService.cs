@@ -1,6 +1,4 @@
-using Microsoft.Azure.Devices;
 using Microsoft.Azure.Devices.Shared;
-using Microsoft.Extensions.Configuration;
 using System.Globalization;
 using System.Text.Json;
 
@@ -8,14 +6,11 @@ namespace AcmeLogisticsApi.Services
 {
     public class DeviceService
     {
-        private readonly RegistryManager _registryManager;
+        private readonly ITwinRepository _twinRepository;
 
-        public DeviceService(IConfiguration configuration)
+        public DeviceService(ITwinRepository twinRepository)
         {
-            var connectionString = configuration["IoTHub:ConnectionString"]
-                ?? throw new InvalidOperationException("IoTHub connection string is missing.");
-
-            _registryManager = RegistryManager.CreateFromConnectionString(connectionString);
+            _twinRepository = twinRepository ?? throw new ArgumentNullException(nameof(twinRepository));
         }
 
         private static JsonElement ParseTwinCollection(string json)
@@ -25,7 +20,7 @@ namespace AcmeLogisticsApi.Services
 
         public async Task<Twin> GetTwinAsync(string deviceId)
         {
-            return await _registryManager.GetTwinAsync(deviceId);
+            return await _twinRepository.GetTwinAsync(deviceId);
         }
 
         public async Task<Twin> UpdateConfigAsync(string deviceId, JsonElement desiredProps)
@@ -34,8 +29,7 @@ namespace AcmeLogisticsApi.Services
             var patch = new Twin();
             patch.Properties.Desired = new TwinCollection(desiredProps.GetRawText());
 
-            await _registryManager.UpdateTwinAsync(deviceId, patch, twin.ETag);
-            return twin;
+            return await _twinRepository.UpdateTwinAsync(deviceId, patch, twin.ETag);
         }
 
         public async Task<double?> GetDesiredTemperatureThresholdAsync(string deviceId)

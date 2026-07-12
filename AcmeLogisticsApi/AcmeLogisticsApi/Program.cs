@@ -13,6 +13,7 @@ var defaultTemperatureThresholdC = builder.Configuration.GetValue<double>("Telem
 var alertMessage = builder.Configuration["TelemetryIngest:AlertMessage"]
     ?? "Alert sustained: temperature exceeds";
 
+builder.Services.AddSingleton<ITwinRepository, RegistryTwinRepository>();
 builder.Services.AddSingleton<DeviceService>();
 builder.Services.AddSingleton<TelemetryService>();
 
