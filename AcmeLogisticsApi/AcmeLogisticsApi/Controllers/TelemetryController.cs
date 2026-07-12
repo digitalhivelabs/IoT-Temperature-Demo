@@ -28,6 +28,13 @@ namespace AcmeLogisticsApi.Controllers
             return Ok(results);
         }
 
+        [HttpGet("summary")]
+        public async Task<IActionResult> GetSummary()
+        {
+            var summary = await _telemetryService.GetSummaryAsync();
+            return Ok(summary);
+        }
+
         [HttpPut("alerts/{blobName}/acknowledge")]
         public async Task<IActionResult> AcknowledgeAlert(string blobName)
         {

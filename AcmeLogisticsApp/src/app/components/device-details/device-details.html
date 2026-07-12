@@ -2,11 +2,11 @@
 <div class="space-y-6 text-on-surface max-w-full">
 
     <!-- Top Highlight Cards (Bento style) -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-gutter">
+    <div *ngIf="telemetryMessages$ | async as messages" class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-gutter">
         <div class="glass-card p-6 rounded-xl flex items-center justify-between group">
             <div>
                 <p class="text-on-surface-variant font-label-caps mb-1">Temperatura Actual</p>
-                <p class="font-data-mono text-display-lg text-primary leading-none">24.5<span class="text-2xl">°C</span>
+                <p class="font-data-mono text-display-lg text-primary leading-none">{{ messages[0]?.temperatureC ?? 0 }}<span class="text-2xl">°C</span>
                 </p>
                 <p class="text-secondary text-xs mt-2 flex items-center gap-1">
                     <span class="material-symbols-outlined text-xs">trending_up</span> +0.2°C vs última hora
@@ -58,61 +58,27 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-outline-variant/10">
-                    <tr class="hover:bg-surface-container-highest/40 transition-colors group">
-                        <td class="px-6 py-4 font-data-mono text-sm">2023-11-24 14:35:01</td>
-                        <td class="px-6 py-4 text-on-surface-variant">#99283-A</td>
-                        <td class="px-6 py-4"><span class="font-bold text-primary">24.5°C</span></td>
-                        <td class="px-6 py-4 text-tertiary">48.2%</td>
-                        <td class="px-6 py-4">
-                            <span
-                                class="bg-surface-container px-2 py-1 rounded text-[10px] border border-outline-variant text-on-surface-variant">OFF</span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <button class="text-on-surface-variant hover:text-secondary"><span
-                                    class="material-symbols-outlined text-sm">more_vert</span></button>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-surface-container-highest/40 transition-colors bg-white/5">
-                        <td class="px-6 py-4 font-data-mono text-sm">2023-11-24 14:30:12</td>
-                        <td class="px-6 py-4 text-on-surface-variant">#99282-A</td>
-                        <td class="px-6 py-4"><span class="font-bold text-primary">24.3°C</span></td>
-                        <td class="px-6 py-4 text-tertiary">47.9%</td>
-                        <td class="px-6 py-4">
-                            <span
-                                class="bg-secondary/10 px-2 py-1 rounded text-[10px] border border-secondary/30 text-secondary">ACTIVE</span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <button class="text-on-surface-variant hover:text-secondary"><span
-                                    class="material-symbols-outlined text-sm">more_vert</span></button>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-surface-container-highest/40 transition-colors">
-                        <td class="px-6 py-4 font-data-mono text-sm">2023-11-24 14:25:44</td>
-                        <td class="px-6 py-4 text-on-surface-variant">#99281-A</td>
-                        <td class="px-6 py-4"><span class="font-bold text-primary">24.4°C</span></td>
-                        <td class="px-6 py-4 text-tertiary">48.0%</td>
-                        <td class="px-6 py-4">
-                            <span
-                                class="bg-surface-container px-2 py-1 rounded text-[10px] border border-outline-variant text-on-surface-variant">OFF</span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <button class="text-on-surface-variant hover:text-secondary"><span
-                                    class="material-symbols-outlined text-sm">more_vert</span></button>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-surface-container-highest/40 transition-colors bg-white/5">
-                        <td class="px-6 py-4 font-data-mono text-sm">2023-11-24 14:20:00</td>
-                        <td class="px-6 py-4 text-on-surface-variant">#99280-A</td>
-                        <td class="px-6 py-4"><span class="font-bold text-primary">24.6°C</span></td>
-                        <td class="px-6 py-4 text-tertiary">48.5%</td>
-                        <td class="px-6 py-4">
-                            <span
-                                class="bg-surface-container px-2 py-1 rounded text-[10px] border border-outline-variant text-on-surface-variant">OFF</span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <button class="text-on-surface-variant hover:text-secondary"><span
-                                    class="material-symbols-outlined text-sm">more_vert</span></button>
-                        </td>
+                    <ng-container *ngIf="telemetryMessages$ | async as messages">
+                        <tr *ngFor="let message of messages" class="hover:bg-surface-container-highest/40 transition-colors group">
+                            <td class="px-6 py-4 font-data-mono text-sm">{{ message.timestamp | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                            <td class="px-6 py-4 text-on-surface-variant">#{{ message.sequenceNumber }}</td>
+                            <td class="px-6 py-4"><span class="font-bold text-primary">{{ message.temperatureC }}°C</span></td>
+                            <td class="px-6 py-4 text-tertiary">{{ message.humidityPct }}%</td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="px-2 py-1 rounded text-[10px] border"
+                                    [ngClass]="message.buzzerActive ? 'bg-secondary/10 text-secondary border-secondary/30' : 'bg-surface-container text-on-surface-variant border-outline-variant'">
+                                    {{ message.buzzerActive ? 'ACTIVE' : 'OFF' }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <button class="text-on-surface-variant hover:text-secondary"><span
+                                        class="material-symbols-outlined text-sm">more_vert</span></button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="(telemetryMessages$ | async)?.length === 0" class="text-on-surface-variant">
+                        <td colspan="6" class="px-6 py-4">No hay datos de telemetría disponibles.</td>
                     </tr>
                 </tbody>
             </table>

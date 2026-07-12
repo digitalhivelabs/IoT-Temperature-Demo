@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: http://localhost:5001/api/telemetry/messages
+  url: "{{ApiUrl}}/api/telemetry/messages"
   auth: inherit
 
 settings:

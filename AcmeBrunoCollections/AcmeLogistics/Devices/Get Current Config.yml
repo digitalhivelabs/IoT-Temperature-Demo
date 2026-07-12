@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: http://localhost:5001/api/device/temperature-pharma-001/config
+  url: "{{ApiUrl}}/api/device/temperature-pharma-001/status"
   auth: inherit
 
 settings:

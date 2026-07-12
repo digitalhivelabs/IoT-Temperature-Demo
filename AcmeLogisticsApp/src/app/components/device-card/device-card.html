@@ -5,14 +5,14 @@
             <span class="material-symbols-outlined text-secondary" data-icon="thermostat">thermostat</span>
         </div>
         <div class="flex gap-2">
-            <span class="status-pill bg-secondary/20 text-secondary border border-secondary/30">12 Active</span>
-            <span class="status-pill bg-error/20 text-error border border-error/30">2 Warning</span>
+            <span class="status-pill bg-secondary/20 text-secondary border border-secondary/30">{{ telemetrySummary()?.readsCount ?? 0 }} Active</span>
+            <span class="status-pill bg-error/20 text-error border border-error/30">{{ telemetrySummary()?.alertsCount ?? 0 }} Warning</span>
         </div>
     </div>
     <div class="mt-4">
         <h3 class="font-headline-sm text-headline-sm">Temperature</h3>
         <div class="flex items-end justify-between mt-2">
-            <span class="font-data-mono text-data-mono text-3xl">22.4°C</span>
+            <span class="font-data-mono text-data-mono text-3xl">{{ telemetrySummary()?.lastTemperature ?? 0 }}°C</span>
             <div class="h-10 w-24">
                 <!-- Micro Sparkline Simulation -->
                 <div class="flex items-end gap-1 h-full">

@@ -5,12 +5,12 @@ info:
 
 http:
   method: POST
-  url: http://localhost:5001/api/device/temperature-pharma-001/command
+  url: "{{ApiUrl}}/api/device/temperature-pharma-001/command"
   body:
     type: json
     data: |-
       {
-        "command": "silence_buzzer",
+        "command": "activate_buzzer",
         "correlationId": "shipment-tracker-001"
       }
   auth: inherit

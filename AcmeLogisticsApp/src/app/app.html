@@ -32,8 +32,17 @@
               data-icon="history">history</span>
           </div>
           <div class="space-y-4 overflow-y-auto max-h-[600px] pr-2">
-            <!-- Alert Item 1 (Critical) -->
-             ...
+            <ng-container *ngIf="alerts$ | async as alerts">
+              <app-alert-card
+                *ngFor="let alert of alerts; trackBy: trackByBlob"
+                [alert]="alert"
+                (acknowledge)="onAcknowledge($event)">
+              </app-alert-card>
+              <p *ngIf="alerts.length === 0"
+                 class="text-sm text-on-surface-variant text-center py-4">
+                No active alerts.
+              </p>
+            </ng-container>
           </div>
         </div>
       </aside>
@@ -79,17 +88,17 @@
 
 <div *ngIf="settingsOpen()" class="fixed inset-0 z-[9999] grid place-items-center bg-black/60 backdrop-blur-sm p-4">
   <div class="absolute inset-0" (click)="closeSettingsModal()"></div>
-  <div class="relative z-10 w-full max-w-[95vw] max-h-[90vh] overflow-hidden rounded-[28px] bg-surface text-on-surface shadow-[0_32px_80px_rgba(0,0,0,0.35)] border border-outline-variant/20">
-    <div class="flex items-center justify-between border-b border-outline-variant/20 px-6 py-4 bg-surface-container-highest">
+  <div class="relative z-10 w-full max-w-xl max-h-[80vh] overflow-hidden rounded-2xl bg-surface text-on-surface shadow-[0_24px_60px_rgba(0,0,0,0.3)] border border-outline-variant/20">
+    <div class="flex items-center justify-between border-b border-outline-variant/20 px-5 py-3 bg-surface-container-highest">
       <div>
-        <p class="text-on-surface-variant text-xs uppercase tracking-[0.16em]">Configuración</p>
-        <h2 class="font-headline-sm text-headline-sm">Ajustes del sistema</h2>
+        <p class="text-on-surface-variant text-[10px] uppercase tracking-[0.16em]">Configuration</p>
+        <h2 class="font-title-md text-base font-semibold">System Settings</h2>
       </div>
-      <button class="rounded-full p-2 text-on-surface hover:bg-surface-container-lowest" type="button" (click)="closeSettingsModal()">
-        <span class="material-symbols-outlined">close</span>
+      <button class="rounded-full p-1.5 text-on-surface hover:bg-surface-container-lowest" type="button" (click)="closeSettingsModal()">
+        <span class="material-symbols-outlined text-xl">close</span>
       </button>
     </div>
-    <div class="overflow-y-auto max-h-[calc(90vh-5.5rem)] p-6 bg-surface-container-highest">
+    <div class="overflow-y-auto max-h-[calc(80vh-4rem)] p-5 bg-surface-container-highest">
       <app-settings></app-settings>
     </div>
   </div>

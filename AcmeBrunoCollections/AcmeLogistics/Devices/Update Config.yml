@@ -5,12 +5,12 @@ info:
 
 http:
   method: PUT
-  url: http://localhost:5001/api/device/temperature-pharma-001/config
+  url: "{{ApiUrl}}/api/device/temperature-pharma-001/config"
   body:
     type: json
     data: |-
       {
-        "temperatureThresholdC": 6.0
+        "temperatureThresholdC": 5.0
       }
   auth: inherit
 

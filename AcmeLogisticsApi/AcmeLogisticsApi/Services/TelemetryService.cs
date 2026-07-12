@@ -21,6 +21,37 @@ namespace AcmeLogisticsApi.Services
             _alertsContainer.CreateIfNotExists();
         }
 
+        public async Task<TelemetrySummary> GetSummaryAsync()
+        {
+            var telemetryBlobs = _telemetryContainer.GetBlobs()
+                                                    .OrderByDescending(b => b.Properties.CreatedOn)
+                                                    .ToList();
+
+            var alertBlobs = _alertsContainer.GetBlobs()
+                                             .Where(b => b.Name.StartsWith("alert-"))
+                                             .ToList();
+
+            double? lastTemperature = null;
+            var readsCount = telemetryBlobs.Count;
+            var alertsCount = alertBlobs.Count;
+
+            if (telemetryBlobs.Count > 0)
+            {
+                var latestBlob = telemetryBlobs.First();
+                var client = _telemetryContainer.GetBlobClient(latestBlob.Name);
+                var content = await client.DownloadContentAsync();
+                var telemetry = JsonSerializer.Deserialize<TelemetryMessage>(content.Value.Content.ToString());
+                lastTemperature = telemetry?.TemperatureC;
+            }
+
+            return new TelemetrySummary
+            {
+                LastTemperature = lastTemperature,
+                ReadsCount = readsCount,
+                AlertsCount = alertsCount
+            };
+        }
+
         public async Task<IEnumerable<TelemetryMessage>> GetLatestMessagesAsync(int maxResults = 10)
         {
             var blobs = _telemetryContainer.GetBlobs()
