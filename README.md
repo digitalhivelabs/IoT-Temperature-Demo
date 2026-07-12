@@ -35,3 +35,57 @@ This repository contains my solution for the Acme Logistics IoT Take-Home Exerci
 | **Operator Action** | Capability for a dispatcher to acknowledge the active alert from the server. | **[✓] Implemented** |
 | **Buzzer Downlink** | Remote execution of the `silence_buzzer` command via Cloud-to-Device / Direct Methods. | **[✓] Implemented** |
 | **Dynamic Config** | Remote updates to `temperatureThresholdC` using *Device Twins* without redeploying. | **[✓] Implemented** |
+
+Markdown
+## 🚀 Getting Started
+
+### 📋 Prerequisites
+Ensure you have the following runtimes installed on your local machine before setting up the services:
+
+```bash
+# Node.js + npm
+node -v
+npm -v
+
+# .NET SDK 10
+dotnet --version
+🔧 Angular Frontend App (AcmeLogisticsApp)
+Bash
+cd AcmeLogisticsApp
+npm install
+npm start
+Optional commands:
+
+Bash
+npm run build
+npm run test
+🔧 React Frontend App (AcmeLogisticsAppReact)
+Bash
+cd AcmeLogisticsAppReact
+npm install
+npm run dev
+Optional commands:
+
+Bash
+npm run build
+npm run preview
+npm run lint
+🔧 .NET API Backend (AcmeLogisticsApi)
+Bash
+cd AcmeLogisticsApi/AcmeLogisticsApi
+dotnet restore
+dotnet run
+To run integration tests:
+
+Bash
+cd AcmeLogisticsApi/AcmeLogisticsApi.Tests.Integration
+dotnet test
+🔧 .NET IoT Agent (agent)
+Bash
+cd agent
+dotnet restore
+dotnet run
+📝 Important Notes
+AcmeBrunoCollections is a configuration/postman collection folder and is not an executable application.
+
+Environment Configuration: All projects utilize .example files for environment variables. Ensure you replicate these as .env or appsettings.json locally and fill in your Azure IoT Hub connection strings before running the applications. (If you need assistance setting up these variables, please let me know!).
