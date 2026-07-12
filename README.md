@@ -5,6 +5,9 @@ This repository contains my solution for the Acme Logistics IoT Take-Home Exerci
 
 ### Screenhots of final implementation.
 
+<img width="400" height="291" alt="Acme Logistics - Preview" src="https://github.com/user-attachments/assets/9b08b30e-a6c2-458b-8126-7742d3ee9c5d" />
+
+
 <img width="1622" height="773" alt="0004" src="https://github.com/user-attachments/assets/a4240dd3-a9e5-425f-a025-277910366cdf" />
 
 <img width="756" height="170" alt="0008" src="https://github.com/user-attachments/assets/6b905cbc-259c-442c-a947-8413fcfde4ba" />
