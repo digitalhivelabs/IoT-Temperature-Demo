@@ -1,0 +1,15 @@
+info:
+  name: Get All Messages
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{ApiUrl}}/api/telemetry/messages"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

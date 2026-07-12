@@ -7,6 +7,7 @@ public sealed class DeviceState
     public double LastTemperatureC { get; set; } = 5.0;
     public double LastHumidityPct { get; set; } = 55.0;
     public bool BuzzerActive { get; set; }
+    public bool BuzzerSilencedByCloud { get; set; }
     public long SequenceNumber { get; private set; }
     public bool SimulateAlarmActive { get; set; }
     public int SimulateAlarmCyclesRemaining { get; set; }
@@ -31,14 +32,19 @@ public sealed class DeviceState
 
     public void EvaluateBuzzer()
     {
+        if (BuzzerSilencedByCloud)
+        {
+            BuzzerActive = false;
+            return;
+        }
+
         if (SimulateAlarmActive && SimulateAlarmCyclesRemaining > 0)
         {
             BuzzerActive = true;
             return;
         }
 
-        var thresholdF = (TemperatureThresholdC * 9.0 / 5.0) + 32.0;
-        BuzzerActive = LastTemperatureC > thresholdF;
+        BuzzerActive = LastTemperatureC > TemperatureThresholdC;
     }
 
     public void AfterTelemetrySent()
@@ -54,6 +60,12 @@ public sealed class DeviceState
         else if (!SimulateAlarmActive && LastTemperatureC <= TemperatureThresholdC)
         {
             BuzzerActive = false;
+        }
+
+        if (BuzzerSilencedByCloud && LastTemperatureC <= TemperatureThresholdC && !SimulateAlarmActive)
+        {
+            BuzzerSilencedByCloud = false;
+            Console.WriteLine("[state] Cloud silence expired because temperature returned to normal.");
         }
     }
 

@@ -1,0 +1,34 @@
+<div class="mb-3 p-3 rounded-r-lg transition-colors"
+     [ngClass]="alert.acknowledged
+       ? 'border-l-4 border-secondary bg-secondary-container/10'
+       : 'border-l-4 border-error bg-error-container/10'">
+
+  <div class="flex justify-between items-start mb-1">
+    <span class="font-label-caps text-[10px] text-on-surface-variant">
+      {{ alert.timestamp | date:'short' }}
+    </span>
+  </div>
+
+  <p class="font-body-md text-body-md font-bold mb-1">{{ alert.message }}</p>
+
+  <p class="text-[12px] text-on-surface-variant leading-tight mb-2">
+    Temp: <strong>{{ alert.temperatureC }}°C</strong>
+    &nbsp;·&nbsp;
+    Threshold: {{ alert.temperatureThreshold }}°C
+  </p>
+
+  <div class="flex items-center justify-between gap-2">
+    <span class="px-2 py-0.5 rounded text-[10px] border"
+          [ngClass]="alert.acknowledged
+            ? 'bg-secondary/10 text-secondary border-secondary/30'
+            : 'bg-error-container/10 text-error border-error/30'">
+      {{ alert.acknowledged ? 'ACKNOWLEDGED' : 'UNACKNOWLEDGED' }}
+    </span>
+    <button *ngIf="!alert.acknowledged && alert.blobName"
+            class="rounded-full px-3 py-1 text-xs font-semibold bg-error text-on-error hover:bg-error/90 transition-colors"
+            type="button"
+            (click)="onAcknowledge()">
+      Acknowledge
+    </button>
+  </div>
+</div>

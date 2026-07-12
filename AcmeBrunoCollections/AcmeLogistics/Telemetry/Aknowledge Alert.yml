@@ -1,0 +1,15 @@
+info:
+  name: Aknowledge Alert
+  type: http
+  seq: 1
+
+http:
+  method: PUT
+  url: "{{ApiUrl}}/api/telemetry/alerts/alert-20260711125827521.json/acknowledge"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -1,0 +1,47 @@
+<div class="glass-card p-6 rounded-xl flex flex-col justify-between min-h-[180px] cursor-pointer"
+    (click)="openDeviceDetails()" role="button" tabindex="0">
+    <div class="flex justify-between items-start">
+        <div class="p-3 bg-primary-container rounded-lg">
+            <span class="material-symbols-outlined text-secondary" data-icon="thermostat">thermostat</span>
+        </div>
+        <div class="flex gap-2">
+            <span class="status-pill bg-secondary/20 text-secondary border border-secondary/30">{{ telemetrySummary()?.readsCount ?? 0 }} Active</span>
+            <span class="status-pill bg-error/20 text-error border border-error/30">{{ telemetrySummary()?.alertsCount ?? 0 }} Warning</span>
+        </div>
+    </div>
+    <div class="mt-4">
+        <h3 class="font-headline-sm text-headline-sm">Temperature</h3>
+        <div class="flex items-end justify-between mt-2">
+            <span class="font-data-mono text-data-mono text-3xl">{{ telemetrySummary()?.lastTemperature ?? 0 }}°C</span>
+            <div class="h-10 w-24">
+                <!-- Micro Sparkline Simulation -->
+                <div class="flex items-end gap-1 h-full">
+                    <div class="w-2 bg-secondary/40 h-[40%] rounded-t-sm"></div>
+                    <div class="w-2 bg-secondary/40 h-[60%] rounded-t-sm"></div>
+                    <div class="w-2 bg-secondary/40 h-[50%] rounded-t-sm"></div>
+                    <div class="w-2 bg-secondary/40 h-[80%] rounded-t-sm"></div>
+                    <div class="w-2 bg-secondary h-full rounded-t-sm"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="deviceDetailsOpen()" class="fixed inset-0 z-[9999] grid place-items-center bg-black/60 backdrop-blur-sm p-4">
+  <div class="absolute inset-0" (click)="closeDeviceDetails()"></div>
+  <div class="relative z-10 w-full max-w-[95vw] max-h-[90vh] overflow-hidden rounded-[28px] bg-surface text-on-surface shadow-[0_32px_80px_rgba(0,0,0,0.35)] border border-outline-variant/20">
+    <div class="flex items-center justify-between border-b border-outline-variant/20 px-6 py-4 bg-surface-container-highest">
+      <div>
+        <p class="text-on-surface-variant text-xs uppercase tracking-[0.16em]">Detalles del dispositivo</p>
+        <h2 class="font-headline-sm text-headline-sm">Información de la tarjeta</h2>
+      </div>
+      <button class="rounded-full p-2 text-on-surface hover:bg-surface-container-lowest" type="button" (click)="closeDeviceDetails()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="overflow-y-auto max-h-[calc(90vh-5.5rem)] p-6 bg-surface-container-highest">
+      <app-device-details></app-device-details>
+    </div>
+  </div>
+</div>
