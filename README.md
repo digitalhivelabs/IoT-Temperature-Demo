@@ -36,56 +36,71 @@ This repository contains my solution for the Acme Logistics IoT Take-Home Exerci
 | **Buzzer Downlink** | Remote execution of the `silence_buzzer` command via Cloud-to-Device / Direct Methods. | **[✓] Implemented** |
 | **Dynamic Config** | Remote updates to `temperatureThresholdC` using *Device Twins* without redeploying. | **[✓] Implemented** |
 
-Markdown
-## 🚀 Getting Started
 
-### 📋 Prerequisites
-Ensure you have the following runtimes installed on your local machine before setting up the services:
+# Local Setup Guide
 
-```bash
-# Node.js + npm
+Follow these steps to run the entire ecosystem locally.
+
+---
+
+## 📋 1. Prerequisites
+
+Before starting, ensure you have the following environments installed on your machine:
+
+# Node.js & npm (For Frontend Apps)
 node -v
 npm -v
 
-# .NET SDK 10
+# .NET SDK (For Backend API & IoT Agent)
 dotnet --version
-🔧 Angular Frontend App (AcmeLogisticsApp)
-Bash
+
+---
+
+## 🛠️ 2. Running the Frontend Applications
+
+Choose either the Angular or React version of the operator interface to run:
+
+### Option A: Angular App (AcmeLogisticsApp)
 cd AcmeLogisticsApp
 npm install
 npm start
-Optional commands:
 
-Bash
-npm run build
-npm run test
-🔧 React Frontend App (AcmeLogisticsAppReact)
-Bash
+*Optional Production & Testing Commands:* npm run build or npm run test
+
+### Option B: React App (AcmeLogisticsAppReact)
 cd AcmeLogisticsAppReact
 npm install
 npm run dev
-Optional commands:
 
-Bash
-npm run build
-npm run preview
-npm run lint
-🔧 .NET API Backend (AcmeLogisticsApi)
-Bash
+*Optional Development Commands:* npm run build, npm run preview, or npm run lint
+
+---
+
+## ⚙️ 3. Running the Backend Services
+
+### Step 1: Start the .NET Core API (AcmeLogisticsApi)
 cd AcmeLogisticsApi/AcmeLogisticsApi
 dotnet restore
 dotnet run
-To run integration tests:
 
-Bash
+### Step 2: Run Integration Tests (Optional)
 cd AcmeLogisticsApi/AcmeLogisticsApi.Tests.Integration
 dotnet test
-🔧 .NET IoT Agent (agent)
-Bash
+
+---
+
+## 📟 4. Running the IoT Device Agent
+
+To simulate live tracker data sending telemetry to your backend, run the C# agent:
+
 cd agent
 dotnet restore
 dotnet run
-📝 Important Notes
-AcmeBrunoCollections is a configuration/postman collection folder and is not an executable application.
 
-Environment Configuration: All projects utilize .example files for environment variables. Ensure you replicate these as .env or appsettings.json locally and fill in your Azure IoT Hub connection strings before running the applications. (If you need assistance setting up these variables, please let me know!).
+---
+
+## 📝 Key Notes & Configuration
+
+* AcmeBrunoCollections: This directory contains API testing collections (such as Bruno or Postman) and is not an executable application.
+* Environment Variables: All applications rely on template configuration files (e.g., .env.example or appsettings.example.json). Make sure to create your local copies without the .example extension and populate them with your Azure IoT Hub connection strings before spinning up the services.
+
