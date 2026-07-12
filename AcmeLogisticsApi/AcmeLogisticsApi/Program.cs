@@ -6,9 +6,29 @@ var builder = WebApplication.CreateBuilder(args);
 string eventHubConnectionString = builder.Configuration["EventHub:ConnectionString"];
 string eventHubName = builder.Configuration["EventHub:Name"];
 string blobConnectionString = builder.Configuration["EventHub:BlobStorage"];
+var sustainedHighReadingsThreshold = builder.Configuration.GetValue<int>("TelemetryIngest:SustainedHighReadingsThreshold", 3);
+var monitoredDeviceId = builder.Configuration["TelemetryIngest:MonitoredDeviceId"]
+    ?? throw new InvalidOperationException("TelemetryIngest:MonitoredDeviceId is required in configuration.");
+var defaultTemperatureThresholdC = builder.Configuration.GetValue<double>("TelemetryIngest:DefaultTemperatureThresholdC", 8.0);
+var alertMessage = builder.Configuration["TelemetryIngest:AlertMessage"]
+    ?? "Alert sustained: temperature exceeds";
 
-builder.Services.AddSingleton(new TelemetryIngestService(eventHubConnectionString, eventHubName, blobConnectionString));
+builder.Services.AddSingleton<DeviceService>();
+builder.Services.AddSingleton<TelemetryService>();
 
+builder.Services.AddSingleton<TelemetryIngestService>(sp =>
+{
+    var deviceService = sp.GetRequiredService<DeviceService>();
+    return new TelemetryIngestService(
+        eventHubConnectionString,
+        eventHubName,
+        blobConnectionString,
+        sustainedHighReadingsThreshold,
+        monitoredDeviceId,
+        defaultTemperatureThresholdC,
+        alertMessage,
+        deviceService);
+});
 
 builder.Services.AddControllers();
 

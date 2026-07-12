@@ -11,12 +11,30 @@ namespace AcmeLogisticsApi.Services
         private readonly EventProcessorClient _processor;
         private readonly BlobContainerClient _telemetryContainer;
 
-        //Alerts (needs to be refactores and no hard coded values.)
+        // Alerts (needs to be refactored and no hard coded values.)
         private int consecutiveHighReadings = 0;
-        private const double TemperatureThreshold = 8.0;
+        private readonly int _sustainedHighReadingsThreshold;
+        private readonly string _monitoredDeviceId;
+        private readonly double _defaultTemperatureThresholdC;
+        private readonly string _alertMessage;
+        private readonly DeviceService _deviceService;
 
-        public TelemetryIngestService(string eventHubConnectionString, string eventHubName, string blobConnectionString)
+        public TelemetryIngestService(
+            string eventHubConnectionString,
+            string eventHubName,
+            string blobConnectionString,
+            int sustainedHighReadingsThreshold,
+            string monitoredDeviceId,
+            double defaultTemperatureThresholdC,
+            string alertMessage,
+            DeviceService deviceService)
         {
+            _sustainedHighReadingsThreshold = sustainedHighReadingsThreshold;
+            _monitoredDeviceId = monitoredDeviceId;
+            _defaultTemperatureThresholdC = defaultTemperatureThresholdC;
+            _alertMessage = alertMessage;
+            _deviceService = deviceService;
+
             var blobClient = new BlobContainerClient(blobConnectionString, "checkpoints");
 
             // Contenedor para telemetría
@@ -36,7 +54,10 @@ namespace AcmeLogisticsApi.Services
                 BlobClient blobClient;
 
                 #region Alert (needs to be refactored)
-                if (telemetry?.TemperatureC > TemperatureThreshold)
+                var threshold = await _deviceService.GetDesiredTemperatureThresholdAsync(_monitoredDeviceId)
+                    ?? _defaultTemperatureThresholdC;
+
+                if (telemetry?.TemperatureC > threshold)
                 {
                     consecutiveHighReadings++;
                 }
@@ -45,19 +66,22 @@ namespace AcmeLogisticsApi.Services
                     consecutiveHighReadings = 0;
                 }
 
-                if (consecutiveHighReadings >= 3)
+                if (consecutiveHighReadings >= _sustainedHighReadingsThreshold)
                 {
+                    blobName = $"alert-{DateTime.UtcNow:yyyyMMddHHmmssfff}.json";
+
                     var alert = new AlertMessage
                     {
                         DeviceId = telemetry?.DeviceId,
                         TemperatureC = telemetry.TemperatureC,
                         Timestamp = telemetry.Timestamp,
-                        Message = "Alert sustained: temperature exceeds",
-                        Acknowledged = false
+                        TemperatureThreshold = threshold,
+                        Message = _alertMessage,
+                        Acknowledged = false,
+                        BlobName = blobName
                     };
 
                     // Guardar alerta en Blob Storage o DB
-                    blobName = $"alert-{DateTime.UtcNow:yyyyMMddHHmmssfff}.json";
                     blobClient = _telemetryContainer.GetBlobClient(blobName);
                     using var streamAlert = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(JsonSerializer.Serialize(alert)));
                     await blobClient.UploadAsync(streamAlert, overwrite: true);
@@ -69,6 +93,7 @@ namespace AcmeLogisticsApi.Services
 
 
                 // Saves to a txt File (testing before adding Blob storage)
+                //NOTE: if this change to a file considere that get data from files in the controllers must change.
                 //await File.AppendAllTextAsync("telemetry.log", body + Environment.NewLine);
 
                 // Saving the data to Blob Storage Telemtry Container

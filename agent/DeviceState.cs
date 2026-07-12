@@ -44,7 +44,8 @@ public sealed class DeviceState
             return;
         }
 
-        BuzzerActive = LastTemperatureC > TemperatureThresholdC;
+        var thresholdF = (TemperatureThresholdC * 9.0 / 5.0) + 32.0;
+        BuzzerActive = LastTemperatureC > thresholdF;
     }
 
     public void AfterTelemetrySent()

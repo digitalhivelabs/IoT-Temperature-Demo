@@ -38,11 +38,10 @@ public sealed class DownlinkHandler
                         Console.WriteLine("[downlink] Buzzer silenced by cloud command.");
                         break;
                     case "activate_buzzer":
-                        _state.BuzzerSilencedByCloud = false;
                         _state.SimulateAlarmActive = true;
                         _state.SimulateAlarmCyclesRemaining = 5;
-                        _state.LastTemperatureC = _state.TemperatureThresholdC + 2.0;
-                        _state.EvaluateBuzzer();
+                        _state.BuzzerSilencedByCloud = false;
+                        _state.BuzzerActive = true;
                         Console.WriteLine("[downlink] Buzzer activated by cloud command.");
                         break;
                     default:

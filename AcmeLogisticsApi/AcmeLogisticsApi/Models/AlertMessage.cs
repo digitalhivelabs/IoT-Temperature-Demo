@@ -9,5 +9,8 @@ namespace AcmeLogisticsApi.Models
 
         [JsonPropertyName("acknowledged")]
         public bool Acknowledged { get; set; } = false;
+
+        [JsonPropertyName("blobName")]
+        public string BlobName { get; set; }
     }
 }

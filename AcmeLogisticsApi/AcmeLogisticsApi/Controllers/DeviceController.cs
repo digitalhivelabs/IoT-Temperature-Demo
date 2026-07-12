@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AcmeLogisticsApi.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Devices;
 using Microsoft.Azure.Devices.Shared;
@@ -12,12 +13,15 @@ namespace AcmeLogisticsApi.Controllers
     public class DeviceController : ControllerBase
     {
         private readonly ServiceClient _serviceClient;
-        private readonly string _iotHubConnectionString;
+        private readonly DeviceService _deviceService;
 
-        public DeviceController(IConfiguration config)
+        public DeviceController(IConfiguration config, DeviceService deviceService)
         {
-            _iotHubConnectionString = config["IoTHub:ConnectionString"];
-            _serviceClient = ServiceClient.CreateFromConnectionString(_iotHubConnectionString);
+            var iotHubConnectionString = config["IoTHub:ConnectionString"]
+                ?? throw new InvalidOperationException("IoTHub connection string is missing.");
+
+            _serviceClient = ServiceClient.CreateFromConnectionString(iotHubConnectionString);
+            _deviceService = deviceService;
         }
 
         [HttpPost("{deviceId}/command")]
@@ -34,32 +38,15 @@ namespace AcmeLogisticsApi.Controllers
         [HttpPut("{deviceId}/config")]
         public async Task<IActionResult> UpdateConfig(string deviceId, [FromBody] JsonElement desiredProps)
         {
-            var registryManager = RegistryManager.CreateFromConnectionString(_iotHubConnectionString);
-
-            var twin = await registryManager.GetTwinAsync(deviceId);
-
-            var patch = new Twin();
-            patch.Properties.Desired = new TwinCollection(desiredProps.GetRawText());
-
-            await registryManager.UpdateTwinAsync(deviceId, patch, twin.ETag);
-
-            return Ok(new { status = "Config updated", deviceId, desiredProps });
+            var twin = await _deviceService.UpdateConfigAsync(deviceId, desiredProps);
+            return Ok(new { status = "Config updated", deviceId, desiredProps, etag = twin.ETag });
         }
 
         [HttpGet("{deviceId}/status")]
         public async Task<IActionResult> GetStatus(string deviceId)
         {
-            var registryManager = RegistryManager.CreateFromConnectionString(_iotHubConnectionString);
-            var twin = await registryManager.GetTwinAsync(deviceId);
-
-            return Ok(new
-            {
-                deviceId,
-                desired = JsonDocument.Parse(twin.Properties.Desired.ToJson()).RootElement,
-                reported = JsonDocument.Parse(twin.Properties.Reported.ToJson()).RootElement,
-                tags = JsonDocument.Parse(twin.Tags.ToJson()).RootElement,
-                etag = twin.ETag
-            });
+            var status = await _deviceService.GetStatusAsync(deviceId);
+            return Ok(status);
         }
     }
 }
