@@ -45,5 +45,21 @@ namespace AcmeLogisticsApi.Controllers
 
             return Ok(new { status = "Config updated", deviceId, desiredProps });
         }
+
+        [HttpGet("{deviceId}/status")]
+        public async Task<IActionResult> GetStatus(string deviceId)
+        {
+            var registryManager = RegistryManager.CreateFromConnectionString(_iotHubConnectionString);
+            var twin = await registryManager.GetTwinAsync(deviceId);
+
+            return Ok(new
+            {
+                deviceId,
+                desired = JsonDocument.Parse(twin.Properties.Desired.ToJson()).RootElement,
+                reported = JsonDocument.Parse(twin.Properties.Reported.ToJson()).RootElement,
+                tags = JsonDocument.Parse(twin.Tags.ToJson()).RootElement,
+                etag = twin.ETag
+            });
+        }
     }
 }
