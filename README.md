@@ -93,10 +93,23 @@ dotnet test
 
 To simulate live tracker data sending telemetry to your backend, run the C# agent:
 
-cd agent
-dotnet restore
-dotnet run
+#### Connect and send telemetry every 30 seconds (Ctrl+C to stop)
+dotnet run --project agent -- connect --device-id shipment-001
 
+#### Custom interval
+dotnet run --project agent -- connect --device-id shipment-001 --interval-seconds 15
+
+#### Send a single telemetry message
+dotnet run --project agent -- send --device-id shipment-001 --temperature 8.4
+
+#### Simulate a high-temperature event (several readings)
+dotnet run --project agent -- simulate-alarm --device-id shipment-001 --cycles 5
+
+#### Show local device state
+dotnet run --project agent -- status
+```
+
+Run `dotnet run --project agent -- --help` for full option details.
 ---
 
 ## 📝 Key Notes & Configuration
