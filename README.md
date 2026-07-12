@@ -3,6 +3,25 @@ This is a temperature tracker implementation excersise
 
 This repository contains my solution for the Acme Logistics IoT Take-Home Exercise. It implements a complete cloud-side architecture designed to ingest, process, and act upon live telemetry from pharmaceutical temperature-tracking devices.
 
+### Screenhots of final implementation.
+
+<img width="1622" height="773" alt="0004" src="https://github.com/user-attachments/assets/a4240dd3-a9e5-425f-a025-277910366cdf" />
+
+<img width="756" height="170" alt="0008" src="https://github.com/user-attachments/assets/6b905cbc-259c-442c-a947-8413fcfde4ba" />
+
+<img width="901" height="249" alt="0009" src="https://github.com/user-attachments/assets/993a04e9-e264-4784-8497-b91d8a1e0500" />
+
+<img width="1885" height="974" alt="0005" src="https://github.com/user-attachments/assets/adeb2fd1-dcd7-43f7-a964-16e6f84bafe5" />
+
+<img width="1887" height="966" alt="0006" src="https://github.com/user-attachments/assets/459b4473-97c0-42d1-a4a8-6af32303bb13" />
+
+<img width="894" height="694" alt="0007" src="https://github.com/user-attachments/assets/feb63449-4502-4c8d-b607-0ec2be189837" />
+
+<img width="434" height="884" alt="0010" src="https://github.com/user-attachments/assets/ea78d035-e4ef-444f-b09f-2b1f7bdc360c" />
+
+<img width="415" height="881" alt="0011" src="https://github.com/user-attachments/assets/f6931f5d-6f95-4315-8b2c-eace63739bb4" />
+
+
 ### 🚀 Features Implemented
 * **Sustained Alerting Logic:** Implemented windowing/time-series evaluation to catch sustained high temperatures while ignoring single, isolated spikes.
 * **Real-time Operator Visibility:** A dashboard/interface that displays active alarms, device state, and exactly when an alert started.
