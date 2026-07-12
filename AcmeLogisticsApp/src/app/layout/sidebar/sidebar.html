@@ -1,0 +1,52 @@
+<nav
+  class="bg-surface-container dark:bg-surface-container h-screen w-20 hover:w-64 transition-all duration-300 fixed left-0 top-0 z-50 backdrop-blur-xl bg-opacity-60 border-r border-outline-variant flex flex-col h-full py-margin-desktop group">
+  <div class="px-6 mb-10 flex items-center gap-4 overflow-hidden">
+    <span class="material-symbols-outlined text-secondary text-3xl shrink-0">hub</span>
+    <span
+      class="font-headline-md text-headline-md text-secondary opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Acme
+      IoT</span>
+  </div>
+  <div class="flex-1 flex flex-col gap-2">
+    <!-- Overview (Active) -->
+    <a class="flex items-center gap-4 px-6 py-3 transition-all duration-200 ease-in-out hover:bg-surface-container-highest text-secondary font-bold group/item"
+      href="#">
+      <span class="material-symbols-outlined shrink-0" data-icon="dashboard">dashboard</span>
+      <span
+        class="font-body-md text-body-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Overview</span>
+    </a>
+    <!-- Devices -->
+    <a class="flex items-center gap-4 px-6 py-3 transition-all duration-200 ease-in-out hover:bg-surface-container-highest text-on-surface-variant hover:text-secondary group/item"
+      href="#">
+      <span class="material-symbols-outlined shrink-0" data-icon="router">router</span>
+      <span
+        class="font-body-md text-body-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Devices</span>
+    </a>
+    <!-- Analytics -->
+    <a class="flex items-center gap-4 px-6 py-3 transition-all duration-200 ease-in-out hover:bg-surface-container-highest text-on-surface-variant hover:text-secondary group/item"
+      href="#">
+      <span class="material-symbols-outlined shrink-0" data-icon="analytics">analytics</span>
+      <span
+        class="font-body-md text-body-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Analytics</span>
+    </a>
+    <!-- Settings -->
+    <a class="flex items-center gap-4 px-6 py-3 transition-all duration-200 ease-in-out hover:bg-surface-container-highest text-on-surface-variant hover:text-secondary group/item"
+      href="#" (click)="openSettings.emit(); $event.preventDefault()">
+      <span class="material-symbols-outlined shrink-0" data-icon="settings">settings</span>
+      <span
+        class="font-body-md text-body-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Settings</span>
+    </a>
+  </div>
+  <div class="px-4 mt-auto border-t border-outline-variant/20 pt-6 overflow-hidden">
+    <div class="flex items-center gap-3 px-2">
+      <div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+        <img class="w-full h-full rounded-full object-cover"
+          data-alt="Close-up professional portrait of a technical operator wearing a sleek black utility jacket in a dimly lit server room with teal and blue ambient lights. The style is cinematic and high-contrast, reflecting a modern industrial aesthetic."
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0BR1kRtAvhaYz2pTqHzxZVdPzdg8UU0AegFKAPI_sRYJobVk7sT8oPyJaXPR2pol5dW5N1SU9ysT_4felFSc9MESmz6W8ecY9QyYf8fq5dOEyVEFsLgdoP21t1oR18Z3hkqgu-yXNhf5mAhv8nGjQ46RO-BQNHG4yJvggE2CJxC-IUJveJRDI2qUphm55LycIFPSJZmzDe-yH0y4QqJ00QNqI8_h0-IKY33yBykIxcwbnG7YxMen4dA" />
+      </div>
+      <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 min-w-0">
+        <p class="font-body-md text-body-md font-bold truncate">Acme Logistics Operator</p>
+        <p class="text-[10px] text-on-surface-variant uppercase tracking-wider">Full Stack and IoT Dev</p>
+      </div>
+    </div>
+  </div>
+</nav>

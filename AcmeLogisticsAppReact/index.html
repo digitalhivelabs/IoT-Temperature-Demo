@@ -4,7 +4,139 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>acmelogisticsappreact</title>
+    <title>Acme Logistics IoT</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#d8e2ff",
+                    "primary-fixed-dim": "#bec6e0",
+                    "outline-variant": "#45464d",
+                    "outline": "#909097",
+                    "surface-container-highest": "#273647",
+                    "surface-container-low": "#0d1c2d",
+                    "on-secondary-fixed-variant": "#005236",
+                    "surface-container-lowest": "#010f1f",
+                    "inverse-primary": "#565e74",
+                    "surface-container": "#122131",
+                    "primary": "#bec6e0",
+                    "surface-container-high": "#1c2b3c",
+                    "surface-tint": "#bec6e0",
+                    "on-surface": "#d4e4fa",
+                    "on-secondary-container": "#00311f",
+                    "tertiary": "#adc6ff",
+                    "on-tertiary-container": "#357df1",
+                    "on-secondary": "#003824",
+                    "on-background": "#d4e4fa",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "on-surface-variant": "#c6c6cd",
+                    "on-tertiary-fixed-variant": "#004395",
+                    "on-tertiary-fixed": "#001a42",
+                    "inverse-on-surface": "#233143",
+                    "error": "#ffb4ab",
+                    "on-tertiary": "#002e6a",
+                    "primary-container": "#0f172a",
+                    "tertiary-container": "#00163a",
+                    "on-primary": "#283044",
+                    "on-error": "#690005",
+                    "background": "#051424",
+                    "surface": "#051424",
+                    "inverse-surface": "#d4e4fa",
+                    "secondary-fixed-dim": "#4edea3",
+                    "primary-fixed": "#dae2fd",
+                    "error-container": "#93000a",
+                    "on-primary-container": "#798098",
+                    "on-secondary-fixed": "#002113",
+                    "surface-dim": "#051424",
+                    "surface-bright": "#2c3a4c",
+                    "on-error-container": "#ffdad6",
+                    "secondary-fixed": "#6ffbbe",
+                    "secondary": "#4edea3",
+                    "on-primary-fixed": "#131b2e",
+                    "surface-variant": "#273647",
+                    "tertiary-fixed-dim": "#adc6ff",
+                    "secondary-container": "#00a572"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "container-max": "1440px",
+                    "margin-desktop": "32px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "data-mono": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "label-caps": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "data-mono": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        background-color: #051424;
+        color: #d4e4fa;
+        font-family: 'Inter', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .glass-card {
+        background: rgba(30, 41, 59, 0.6);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(51, 65, 85, 0.5);
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .status-pill {
+        padding: 2px 8px;
+        border-radius: 9999px;
+        font-size: 10px;
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+      }
+      /* Custom pulse for active status */
+      @keyframes soft-pulse {
+        0% { opacity: 0.6; }
+        50% { opacity: 1; }
+        100% { opacity: 0.6; }
+      }
+      .animate-soft-pulse {
+        animation: soft-pulse 2s infinite ease-in-out;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+
   </head>
   <body>
     <div id="root"></div>
