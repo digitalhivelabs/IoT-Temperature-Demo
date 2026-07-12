@@ -109,7 +109,8 @@ dotnet run --project agent -- simulate-alarm --device-id shipment-001 --cycles 5
 dotnet run --project agent -- status
 ```
 
-Run dotnet run --project agent -- --help` for full option details.
+#### Run for full option details.
+dotnet run --project agent -- --help 
 ---
 
 ## 📝 Key Notes & Configuration
