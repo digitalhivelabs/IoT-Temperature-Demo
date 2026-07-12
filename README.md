@@ -131,6 +131,7 @@ The system follows a standard event-driven IoT architecture for real-time ingest
 
 You can view the detailed architecture diagram below:
 
+
 ![IoT Architecture](docs/arquitectura.png)
 
 ---
